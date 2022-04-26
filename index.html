@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Document</title>
+</head>
+<style>
+	
+	.div{
+		height: 150px;
+		width: 325px;
+		background-image: url(car.png);
+		overflow: hidden;
+		z-index: 1;
+		background-size: 100% 100%;
+		position: absolute;
+	}
+	.crot{
+		background-image: url(smoke1.png);
+		background-size: 100% 100%;
+		width: 200px;
+		height: 200px;
+		position: absolute;
+		transition: 0.5s;
+		z-index: -1;
+	}
+	.loos{
+            left: 800px;
+            top: 400px;
+            position: absolute;
+            font-family: Old English Text MT;
+            src: url(662_old_english.ttf);
+            font-size: 80px;
+            display: none;
+        }
+    .win{
+    		left: 800px;
+            top: 400px;
+            position: absolute;
+            font-family: Old English Text MT;
+            src: url(662_old_english.ttf);
+            font-size: 80px;
+            display: none;
+    }
+    .h1{
+            left: 10px;
+            top: 50px;
+            position: absolute;
+            font-family: Old English Text MT;
+            src: url(662_old_english.ttf);
+            font-size: 60px;
+        }
+</style>
+<body style="background-image: url(fon.webp.crdownload);background-size: 105%;">
+
+
+<h1 class="loos">You loos!</h1>
+<h1 class="win">You win!</h1>
+<h1 class="h1">Score: <span class="score">0</span></h1>
+
+
+<div class="div" style="left: 400px; top: 150px;"></div>
+<div class="div" style="left: 750px; top: 150px;"></div>
+<div class="div" style="left: 1100px; top: 150px;"></div>
+
+<div class="div" style="left: 400px; top: 450px;"></div>
+<div class="div" style="left: 750px; top: 450px;"></div>
+<div class="div" style="left: 1100px; top: 450px;"></div>
+
+<div class="div" style="left: 400px; top: 750px;"></div>
+<div class="div" style="left: 750px; top: 750px;"></div>
+<div class="div" style="left: 1100px; top: 750px;"></div>
+
+
+<script type="text/javascript">
+
+let kord_1 = ["450", "800", "1150"];
+let kord_2 = ["100", "400", "700"]
+let int1;
+
+let score = 0;
+let div = document.querySelectorAll(".div");
+
+function random_num(){
+	let rand = Math.random() * 2;
+	let round = Math.round(rand); 
+	return round
+}
+
+int1 = setInterval(create_crot, 600);
+
+
+function create_crot(){
+	let crot  = document.createElement('crot');
+	document.body.appendChild(crot);
+	crot.classList.add("crot");
+
+	let index_top = random_num();
+	let index_left = random_num();
+
+	crot.style.top = kord_2[index_top] + "px";
+	crot.style.left = kord_1[index_left] + "px";
+
+	crot.onclick = function(){
+		crot.style.display = "none";
+		score = score + 20;
+		document.querySelector(".score").innerHTML = score;
+	}
+
+	function move_up(){
+		crot.style.top = kord_2[index_top] - 100 + "px";
+	}
+
+	function move_down(){
+		crot.style.top = kord_2[index_top] + "px";
+	}
+	function delete_(){
+		crot.style.display = "none";
+	}
+	setTimeout(move_up, 200);
+	setTimeout(move_down, 1000);
+	setTimeout(delete_ , 1500)
+}
+
+function end(){
+	if (score < 250){
+		clearInterval(int1);
+		for(let i=0;i<9;i=i+1 ){
+		div[i].style.display = "none";
+		}
+		document.querySelector(".loos").style.display = "block";
+	}
+
+	if (score > 250){
+		clearInterval(int1);
+		for(let i=0;i<9;i=i+1 ){
+		div[i].style.display = "none";
+		}
+		document.querySelector(".win").style.display = "block";
+	}
+}
+
+setTimeout(end, 10000);
+
+
+</script>
+</body>
+</html>
